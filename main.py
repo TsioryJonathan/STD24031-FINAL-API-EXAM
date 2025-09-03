@@ -51,4 +51,30 @@ def list_phones():
         content={"phones": serializedPhoneList()},
         status_code=200
     )
+
+@app.get("/phones/{id}")
+def get_phone(id: int):
+    for phone in phoneList:
+        if phone.id == id:
+            return JSONResponse(
+                content={"phone": phone.model_dump()},
+                status_code=200
+            )
+    return JSONResponse(
+        content={"message": "Phone not found"},
+        status_code=404
+    )
     
+@app.put("/phones/{id}")
+def modify_characteristics(newCharacteristics: Characteristics, id: int):
+    for phone in phoneList:
+        if phone.id == id:
+            phone.characteristics = newCharacteristics
+            return JSONResponse(
+                content={"phone": phone.model_dump()},
+                status_code=200
+            )
+    return JSONResponse(
+        content={"message": "Phone not found"},
+        status_code=404
+    )
