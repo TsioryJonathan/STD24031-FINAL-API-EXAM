@@ -1,0 +1,29 @@
+### get health
+GET http://localhost:8000/health
+
+### Post phones
+POST http://localhost:8000/phones
+Content-Type: application/json
+
+{
+  [
+    {
+        "id":1,
+        "brand":"Apple",
+        "model":"iPhone 13",
+        "characteristics":{
+            "ram_memory:" : 4,
+            "rom_memory:" : 128,
+        }
+    },
+    {
+        "id":2,
+        "brand":"Samsung",
+        "model":"S21",
+        "characteristics":{
+            "ram_memory:" : 4,
+            "rom_memory:" : 128,
+        }
+    }
+  ]
+}
