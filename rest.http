@@ -5,28 +5,48 @@ GET http://localhost:8000/health
 POST http://localhost:8000/phones
 Content-Type: application/json
 
-{
-  [
+[
     {
-        "id":"phone001",
-        "brand":"Apple",
-        "model":"iPhone 13",
-        "characteristics":{
-            "ram_memory:" : "4",
-            "rom_memory:" : "128",
+        "id": "phoneTest",
+        "brand": "Nokia",
+        "model": "Nokia 6",
+        "characteristics": {
+            "ram_memory": 4,
+            "rom_memory": 64
         }
     },
     {
-        "id":"phone002",
-        "brand":"Samsung",
-        "model":"S21",
-        "characteristics":{
-            "ram_memory:" : "4",
-            "rom_memory:" : "128",
+        "id": "phone001",
+        "brand": "iphone",
+        "model": "16 PM",
+        "characteristics": {
+            "ram_memory": 4,
+            "rom_memory": 64
+        }
+    },
+    {
+        "id": "phoneTest",
+        "brand": "Nokia",
+        "model": "Nokia 6",
+        "characteristics": {
+            "ram_memory": 4,
+            "rom_memory": 64
         }
     }
-  ]
-}
+
+]
 
 ### Get phones
 GET http://localhost:8000/phones
+
+### Get phone by id
+GET http://localhost:8000/phones/phoneTest
+
+### Modify a phone characteristics
+PUT http://localhost:8000/phones/phoneTest/characteristics
+Content-Type: application/json
+
+{
+    "ram_memory": 8,
+    "rom_memory": 256
+}

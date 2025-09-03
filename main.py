@@ -14,31 +14,35 @@ def get_health():
 class Characteristics(BaseModel):
     ram_memory: int
     rom_memory: int
+    
 class PhoneModel(BaseModel):
     id: str
     brand: str
     model: str
     characteristics: Characteristics
 
-phoneList: List[PhoneModel] = [{
-    "id": "1",
-    "brand": "Apple",
-    "model": "iPhone 14 Pro",
-    "characteristics": {
-        "ram_memory": 6,
-        "rom_memory": 256
-    }
-}]
+phoneList: List[PhoneModel] = []
 
 def serializedPhoneList():
     phones_converted = []
     for phone in phoneList:
-        phones_converted.append(phone.model_dump())
+       toAdd = {
+              "id": phone.id,
+              "brand": phone.brand,
+              "model": phone.model,
+              "characteristics": {
+                "ram_memory": phone.characteristics.ram_memory,
+                "rom_memory": phone.characteristics.rom_memory
+              }
+       }
+       phones_converted.append(toAdd)
     return phones_converted
 
+
+
 @app.post("/phones")
-def create_phone(phones: List[PhoneModel]):
-    for phone in phones:
+def create_phone(payload: List[PhoneModel]):
+    for phone in payload:
         phoneList.append(phone)
     return JSONResponse(
         content={"phones": serializedPhoneList()},
@@ -53,7 +57,7 @@ def list_phones():
     )
 
 @app.get("/phones/{id}")
-def get_phone(id: int):
+def get_phone(id: str):
     for phone in phoneList:
         if phone.id == id:
             return JSONResponse(
@@ -65,8 +69,8 @@ def get_phone(id: int):
         status_code=404
     )
     
-@app.put("/phones/{id}")
-def modify_characteristics(newCharacteristics: Characteristics, id: int):
+@app.put("/phones/{id}/characteristics")
+def modify_characteristics(newCharacteristics: Characteristics, id: str):
     for phone in phoneList:
         if phone.id == id:
             phone.characteristics = newCharacteristics

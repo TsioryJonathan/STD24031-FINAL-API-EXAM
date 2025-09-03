@@ -5,7 +5,11 @@ info:
   description: This is a specification of STD24031
 servers:
   - url: http://localhost:8000
-
+tags:
+  - name: Health
+    description: Health Check
+  - name: Phones
+    description: Operations related to phones
 components:
   schemas:
     Characteristics:
@@ -52,8 +56,11 @@ paths:
                 example: OK
   /phones:
     summary: Operation related to phones
+    
     get:
       description: Get all phones
+      tags:
+      - Phones
       responses:
         "200":
           description: A list of phones
@@ -78,6 +85,8 @@ paths:
                     rom_memory: 256
     post:
       description: Create a list of phones
+      tags:
+      - Phones
       requestBody:
         required: true
         content:
@@ -132,6 +141,8 @@ paths:
         example: "1"
     get:
       description: Get a phone by ID
+      tags:
+      - Phones
       responses:
         "200":
           description: ok
@@ -158,8 +169,19 @@ paths:
               example:
                 message: Phone not found
 
+  /phones/{id}/characteristics:
+    summary: Operations related to phone characteristics
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "1"
     put:
         description: Update a phone characteristics by ID
+        tags:
+          - Phones
         requestBody:
           required: true
           content:
@@ -171,7 +193,7 @@ paths:
                 rom_memory: 64
         responses:
           "200":
-            description: Updated
+            description: Ok
             content:
               application/json:
                 schema:
