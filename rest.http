@@ -27,3 +27,6 @@ Content-Type: application/json
     }
   ]
 }
+
+### Get phones
+GET http://localhost:8000/phones

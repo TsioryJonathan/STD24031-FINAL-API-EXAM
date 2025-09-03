@@ -1,9 +1,9 @@
-from fastapi import FastAPI , Response
-from starlette.responses import JSONResponse
+import json
+from fastapi import FastAPI, Request
+from starlette.responses import Response
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import List
-
-from starlette.requests import Request
 
 app = FastAPI()
 
@@ -21,14 +21,14 @@ class PhoneModel(BaseModel):
     characteristics: Characteristics
 
 phoneList: List[PhoneModel] = [{
-        "id":1,
-        "brand":"Apple",
-        "model":"iPhone 13",
-        "characteristics":{
-            "ram_memory:" : 4,
-            "rom_memory:" : 128,
-        }
-    }]
+    "id": 1,
+    "brand": "Apple",
+    "model": "iPhone 14 Pro",
+    "characteristics": {
+        "ram_memory": 6,
+        "rom_memory": 256
+    }
+}]
 
 def serializedPhoneList():
     phones_converted = []
@@ -40,6 +40,13 @@ def serializedPhoneList():
 def create_phone(phones: List[PhoneModel]):
     for phone in phones:
         phoneList.append(phone)
+    return JSONResponse(
+        content={"phones": serializedPhoneList()},
+        status_code=200
+    )
+
+@app.get("/phones")
+def list_phones():
     return JSONResponse(
         content={"phones": serializedPhoneList()},
         status_code=200
