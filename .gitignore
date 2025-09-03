@@ -48,3 +48,6 @@ tmp/
 
 # --- Docker ---
 docker-data/
+
+
+rest.http

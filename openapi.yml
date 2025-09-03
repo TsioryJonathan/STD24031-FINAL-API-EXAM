@@ -46,6 +46,8 @@ paths:
   /health:
     summary: Health Check
     get:
+      tags:
+        - Health
       responses:
         "200":
           description: OK
