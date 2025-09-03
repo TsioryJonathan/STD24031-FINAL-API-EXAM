@@ -1,0 +1,196 @@
+openapi: "3.0.3"
+info:
+  title: STD24031
+  version: "1.0"
+  description: This is a specification of STD24031
+servers:
+  - url: http://localhost:8000
+
+components:
+  schemas:
+    Characteristics:
+      type: object
+      properties:
+        ram_memory:
+          type: integer
+        rom_memory:
+          type: integer
+      required: [ram_memory, rom_memory]
+      example:
+        ram_memory: 8
+        rom_memory: 256
+    Phone:
+      type: object
+      properties:
+        id:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        characteristics:
+          $ref: "#/components/schemas/Characteristics"
+      required: [id, brand, model, characteristics]
+      example:
+        id: "1"
+        brand: "Samsung"
+        model: "S25"
+        characteristics:
+          ram_memory: 16
+          rom_memory: 512
+paths:
+  /health:
+    summary: Health Check
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
+  /phones:
+    summary: Operation related to phones
+    get:
+      description: Get all phones
+      responses:
+        "200":
+          description: A list of phones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Phone"
+              example:
+                - id: "1"
+                  brand: "Samsung"
+                  model: "S25"
+                  characteristics:
+                    ram_memory: 16
+                    rom_memory: 512
+                - id: "2"
+                  brand: "Apple"
+                  model: "iPhone 15"
+                  characteristics:
+                    ram_memory: 8
+                    rom_memory: 256
+    post:
+      description: Create a list of phones
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Phone"
+            example:
+              - id: "1"
+                brand: "Samsung"
+                model: "S25"
+                characteristics:
+                  ram_memory: 16
+                  rom_memory: 512
+              - id: "2"
+                brand: "Apple"
+                model: "iPhone 15"
+                characteristics:
+                  ram_memory: 8
+                  rom_memory: 256
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Phone"
+              example:
+                - id: "1"
+                  brand: "Samsung"
+                  model: "S25"
+                  characteristics:
+                    ram_memory: 16
+                    rom_memory: 512
+                - id: "2"
+                  brand: "Apple"
+                  model: "iPhone 15"
+                  characteristics:
+                    ram_memory: 8
+                    rom_memory: 256
+  /phones/{id}:
+    summary: Operation related to a specific phone
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "1"
+    get:
+      description: Get a phone by ID
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phone"
+              example:
+                id: "1"
+                brand: "Samsung"
+                model: "S25"
+                characteristics:
+                  ram_memory: 16
+                  rom_memory: 512
+        "404":
+          description: Phone not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Phone not found
+
+    put:
+        description: Update a phone characteristics by ID
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Characteristics"
+              example:
+                ram_memory: 4
+                rom_memory: 64
+        responses:
+          "200":
+            description: Updated
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Phone"
+                example:
+                  id: "1"
+                  brand: "Samsung"
+                  model: "S25"
+                  characteristics:
+                      ram_memory: 4
+                      rom_memory: 64
+          "404":
+            description: Phone not found
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                example:
+                  message: Phone not found

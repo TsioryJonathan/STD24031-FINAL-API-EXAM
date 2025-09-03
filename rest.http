@@ -8,21 +8,21 @@ Content-Type: application/json
 {
   [
     {
-        "id":1,
+        "id":"phone001",
         "brand":"Apple",
         "model":"iPhone 13",
         "characteristics":{
-            "ram_memory:" : 4,
-            "rom_memory:" : 128,
+            "ram_memory:" : "4",
+            "rom_memory:" : "128",
         }
     },
     {
-        "id":2,
+        "id":"phone002",
         "brand":"Samsung",
         "model":"S21",
         "characteristics":{
-            "ram_memory:" : 4,
-            "rom_memory:" : 128,
+            "ram_memory:" : "4",
+            "rom_memory:" : "128",
         }
     }
   ]

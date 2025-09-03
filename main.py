@@ -21,7 +21,7 @@ class PhoneModel(BaseModel):
     characteristics: Characteristics
 
 phoneList: List[PhoneModel] = [{
-    "id": 1,
+    "id": "1",
     "brand": "Apple",
     "model": "iPhone 14 Pro",
     "characteristics": {
